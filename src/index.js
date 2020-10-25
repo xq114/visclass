@@ -10,8 +10,12 @@ let _height = $(window).height();
 let width = 0.9 * _width;
 let height = 0.96 * _height;
 
+// let x_attr = 'Institution Index';
 let x_attr = 'Ph.D. Graduation Year';
-let y_attr = 'Publications';
+let y_attr = 'H-index';
+let r_attr = 'Citations';
+// let highlight_attr = 'Research Interest';
+let highlight_attr = 'Institution';
 
 let fontFamily;
 
@@ -101,7 +105,8 @@ function draw_main() {
             return x(parseInt(d[x_attr]));
         })
         .attr('cy', (d, i) => y(parseInt(d[y_attr])))
-        .attr('r', 3)
+        .attr('r', (d, i) => Math.pow(parseInt(d[r_attr]), 0.13))
+        .attr('style', 'fill:#FCCF31;opacity:0.4;')
         .on('mouseover', (e, d) => {
 
             //console.log('e', e, 'd', d)
@@ -112,28 +117,41 @@ function draw_main() {
             let grad_year = d['Ph.D. Graduation Year'];
             let grad_school = d['Ph.D. Graduate School'];
             let pubs = d['Publications'];
+            let cites = d['Citations'];
             //console.log('data', d);
 
 
-            let content = '<table><tr><td>Name</td><td>' + name + '</td></tr>'
-                + '<tr><td>Institution</td><td>' + institution + '</td></tr>'
-                + '<tr><td>Ph.D. Graduation Year</td><td>' + grad_year + '</td></tr>'
-                + '<tr><td>Ph.D. Graduation School</td><td>' + grad_school + '</td></tr>'
-                + '<tr><td>Publications</td><td>' + pubs + '</td></tr></table>';
+            let content = '<table><tr><td class="idx">Name</td><td>' + name + '</td></tr>'
+                + '<tr><td class="idx">Institution</td><td>' + institution + '</td></tr>'
+                + '<tr><td class="idx">Ph.D. Grad Year</td><td>' + grad_year + '</td></tr>'
+                + '<tr><td class="idx">Ph.D. Grad School</td><td>' + grad_school + '</td></tr>'
+                + '<tr><td class="idx">Publications</td><td>' + pubs + '</td></tr>'
+                + '<tr><td class="idx">Citations</td><td>' + cites + '</td></tr></table>';
 
             // tooltip
             let tooltip = d3.select('#tooltip');
-            tooltip.html(content)
-                .style('left', (x(parseInt(d[x_attr])) + 5) + 'px')
-                .style('top', (y(parseInt(d[y_attr])) + 5) + 'px')
-                //.transition().duration(500)
+            tooltip = tooltip.html(content);
+            let tooltiph = tooltip.property("offsetHeight");
+            let topdist = (y(parseInt(d[y_attr])) + 5);
+            if (y(parseInt(d[y_attr])) > 0.5 * height)
+                topdist = (y(parseInt(d[y_attr])) - tooltiph - 5);
+            tooltip.style('left', (x(parseInt(d[x_attr])) + 5) + 'px')
+                .style('top', topdist + 'px')
+                // .transition().duration(500)
                 .style('visibility', 'visible');
+
+            // color pick
+            let circles = d3.selectAll('circle');
+            circles.data(data)
+                .attr('style', (d, i) => d[highlight_attr] === institution ? 'fill:#0396FF;opacity:1.0;' : 'fill:#FCCF31;opacity:0.4;')
+                // .sort((a, b) => a[highlight_attr] === b[highlight_attr] ? 0 : a[highlight_attr] === institution ? 1 : -1);
         })
         .on('mouseout', (e, d) => {
-
             // remove tooltip
             let tooltip = d3.select('#tooltip');
             tooltip.style('visibility', 'hidden');
+            let circles = d3.selectAll('circle');
+            circles.attr('style', 'fill:#FCCF31;opacity:0.4;');
         })
 }
 

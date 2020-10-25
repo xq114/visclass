@@ -32,6 +32,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fortawesome/fontawesome-free@npm:^5.15.1":
+  version: 5.15.1
+  resolution: "@fortawesome/fontawesome-free@npm:5.15.1"
+  checksum: 80dba87ece2d438cfee2548c4d31527cf1ae992f750dcd4b1ac8cbba546f2d6fc0f76caf0c093df658e1eb7bc844e78267d555e49075108b5cffa7a3f89ce232
+  languageName: node
+  linkType: hard
+
 "@npmcli/move-file@npm:^1.0.1":
   version: 1.0.1
   resolution: "@npmcli/move-file@npm:1.0.1"
@@ -2760,6 +2767,7 @@ resolve@^1.17.0:
   version: 0.0.0-use.local
   resolution: "visclass@workspace:."
   dependencies:
+    "@fortawesome/fontawesome-free": ^5.15.1
     d3: ^6.2.0
     jquery: ^3.5.1
     snowpack: ^2.15.1

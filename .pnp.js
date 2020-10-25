@@ -37,6 +37,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {
           "packageLocation": "./",
           "packageDependencies": [
+            ["@fortawesome/fontawesome-free", "npm:5.15.1"],
             ["d3", "npm:6.2.0"],
             ["jquery", "npm:3.5.1"],
             ["snowpack", "npm:2.15.1"]
@@ -71,6 +72,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/helper-validator-identifier", "npm:7.10.4"],
             ["chalk", "npm:2.4.2"],
             ["js-tokens", "npm:4.0.0"]
+          ],
+          "linkType": "HARD",
+        }]
+      ]],
+      ["@fortawesome/fontawesome-free", [
+        ["npm:5.15.1", {
+          "packageLocation": "./.yarn/unplugged/@fortawesome-fontawesome-free-npm-5.15.1-76d33468b2/node_modules/@fortawesome/fontawesome-free/",
+          "packageDependencies": [
+            ["@fortawesome/fontawesome-free", "npm:5.15.1"]
           ],
           "linkType": "HARD",
         }]
@@ -3184,6 +3194,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["visclass", "workspace:."],
+            ["@fortawesome/fontawesome-free", "npm:5.15.1"],
             ["d3", "npm:6.2.0"],
             ["jquery", "npm:3.5.1"],
             ["snowpack", "npm:2.15.1"]

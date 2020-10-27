@@ -66,12 +66,18 @@ body {
   opacity: 0.8;
 }
 
+svg {
+  position: absolute;
+  top: 0;
+  right: 18rem;
+}
+
 #tooltip table {
   width: 15rem;
 }
 
 #tooltip td.idx {
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .domain {
@@ -83,4 +89,56 @@ body {
 .tick line {
   stroke: rgb(80, 80, 80);
   stroke-linecap: round;
+}
+
+#panel {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: absolute;
+  left: auto;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 2rem;
+  margin: 0;
+  width: 20rem;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+#panel input {
+  font-size: 18px;
+  padding: 8px 15px;
+}
+
+#panel h4 {
+  font-size: 24px;
+}
+
+#panel ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+#panel li {
+  font-size: 18px;
+  padding-left: 1rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.6rem;
+}
+
+#panel li:hover {
+  background-color: #ccc;
+}
+
+#selection {
+  margin-bottom: 20px;
+  margin-top: auto;
+}
+
+#input_con {
+  font-size: 16px;
+  padding-left: 1rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.6rem;
 }

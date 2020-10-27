@@ -2,12 +2,16 @@ import * as d3 from 'd3';
 import * as jQuery from 'jquery';
 const $ = jQuery.default;
 
-import { data_file, get_min_max } from './data.js';
+import { data_file, get_min_max, get_mid } from './data.js';
 let data = null;
 
-let _width = $(window).width();
+function convertRemToPixels(rem) {
+    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}
+
+let _width = $(window).width() - convertRemToPixels(10);
 let _height = $(window).height();
-let width = 0.9 * _width;
+let width = 1.0 * _width;
 let height = 0.96 * _height;
 
 // let x_attr = 'Institution Index';
@@ -15,7 +19,8 @@ let x_attr = 'Ph.D. Graduation Year';
 let y_attr = 'H-index';
 let r_attr = 'Citations';
 // let highlight_attr = 'Research Interest';
-let highlight_attr = 'Institution';
+let highlight_attr = 'Institution Index';
+let tsinghua = 296;
 
 let fontFamily;
 
@@ -63,6 +68,13 @@ function draw_main() {
         .ticks(10)
         .tickFormat(d => d);
 
+    // [mid, max] => [2, 6]
+    // (max/min)^alpha = 100
+    let r_min_max = get_min_max(data, r_attr);
+    let r_mid = get_mid(data, r_attr);
+    let exponent = Math.log(3) / (Math.log(r_min_max[1]) - Math.log(r_mid));
+    console.log(exponent);
+
     // x axis
     svg.append('g')
         .attr('transform', `translate(${0}, ${height - padding.bottom})`)
@@ -99,14 +111,15 @@ function draw_main() {
         .selectAll('circle')
         .data(data)
         .enter().append('circle')
+        // .sort((a, b) => a[highlight_attr] === b[highlight_attr] ? 0 : a[highlight_attr] === tsinghua ? 1 : -1)
         .attr('class', 'point')
         .attr('cx', (d, i) => {
             //console.log('data', d); 
             return x(parseInt(d[x_attr]));
         })
         .attr('cy', (d, i) => y(parseInt(d[y_attr])))
-        .attr('r', (d, i) => Math.pow(parseInt(d[r_attr]), 0.13))
-        .attr('style', 'fill:#FCCF31;opacity:0.4;')
+        .attr('r', (d, i) => Math.pow(parseInt(d[r_attr]) / r_min_max[1], exponent) * 6)
+        .attr('style', 'fill:#FCCF31;opacity:0.6;')
         .on('mouseover', (e, d) => {
 
             //console.log('e', e, 'd', d)
@@ -135,35 +148,95 @@ function draw_main() {
             let topdist = (y(parseInt(d[y_attr])) + 5);
             if (y(parseInt(d[y_attr])) > 0.5 * height)
                 topdist = (y(parseInt(d[y_attr])) - tooltiph - 5);
-            tooltip.style('left', (x(parseInt(d[x_attr])) + 5) + 'px')
+            tooltip.style('left', (x(parseInt(d[x_attr])) + 5 - width / 12) + 'px')
                 .style('top', topdist + 'px')
                 // .transition().duration(500)
                 .style('visibility', 'visible');
 
             // color pick
+            let highlight = d[highlight_attr];
             let circles = d3.selectAll('circle');
-            circles.data(data)
-                .attr('style', (d, i) => d[highlight_attr] === institution ? 'fill:#0396FF;opacity:1.0;' : 'fill:#FCCF31;opacity:0.4;')
-                // .sort((a, b) => a[highlight_attr] === b[highlight_attr] ? 0 : a[highlight_attr] === institution ? 1 : -1);
+            circles//.data(data)
+                .attr('style', (d, i) => d[highlight_attr] === highlight ? 'fill:#0396FF;opacity:1.0;' : 'fill:#FCCF31;opacity:0.2;')
+            // .sort((a, b) => a[highlight_attr] === b[highlight_attr] ? 0 : a[highlight_attr] === highlight ? 1 : -1);
         })
         .on('mouseout', (e, d) => {
             // remove tooltip
             let tooltip = d3.select('#tooltip');
             tooltip.style('visibility', 'hidden');
             let circles = d3.selectAll('circle');
-            circles.attr('style', 'fill:#FCCF31;opacity:0.4;');
-        })
+            circles.attr('style', 'fill:#FCCF31;opacity:0.6;');
+        });
 }
+
+let inst_list = [];
 
 function main() {
     d3.csv(data_file).then(function (DATA) {
         data = DATA;
 
+        if (inst_list.length == 0) {
+            let current_inst = null;
+            data.forEach(function (d) {
+                if (d['Institution'] != current_inst) {
+                    current_inst = d['Institution'];
+                    inst_list.push(current_inst);
+                }
+            });
+        }
+
         // remove data without x_attr or y_attr
-        data = data.filter((d, i) => (d[x_attr] != '' && d[y_attr] != ''));
+        data = data.filter((d, i) => (d[x_attr] != '' && d[y_attr] != ''))
+            .sort((a, b) => a['Institution Index'] === b['Institution Index'] ? 0 : a['Institution Index'] === tsinghua ? 1 : -1);
         set_ui();
         draw_main();
-    })
+    });
 }
 
-main()
+function onclick1() {
+    y_attr = 'H-index';
+    r_attr = 'Citations';
+    d3.selectAll("g").remove();
+    main();
+}
+window.onclick1 = onclick1;
+
+function onclick2() {
+    y_attr = 'Citations';
+    r_attr = 'H-index';
+    d3.selectAll("g").remove();
+    main();
+}
+window.onclick2 = onclick2;
+
+let uniq = null;
+
+$(filter).on("keydown", function (e) {
+    let keycode = e.keycode || e.which;
+    if (keycode == 13) {
+        let inst = uniq;
+        if (uniq != null) {
+            let circles = d3.selectAll('circle')
+                .attr('style', (d, i) => d['Institution'] === inst ? 'fill:#0396FF;opacity:1.0;' : 'fill:#FCCF31;opacity:0.2;');
+        }
+    } else {
+        d3.selectAll('circle').attr('style', 'fill:#FCCF31;opacity:0.6;');
+    }
+});
+
+$(filter).on("input", function (e) {
+    let cur_input = $(filter).val();
+    let triggerd = inst_list.filter((d, i) => d.startsWith(cur_input));
+    console.log(cur_input);
+    d3.selectAll("#input_con>div").remove();
+    if (triggerd.length == 1) {
+        uniq = triggerd[0];
+    } else {
+        uniq = null;
+    }
+    for (let i = 0; i < triggerd.length && i < 5; i++) {
+        d3.select("#input_con").append("div").text(triggerd[i]);
+    }
+});
+
+main();

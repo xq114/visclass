@@ -16,4 +16,13 @@ function get_min_max(data, attr) {
     return [min, max];
 }
 
-export { data_file, get_min_max };
+function get_mid(data, attr) {
+    let sorted_data = data.sort((a, b) => parseInt(a[attr]) - parseInt(b[attr]));
+    let length = data.length >> 1;
+    let mid = parseInt(sorted_data[length][attr]);
+    console.log("attr", attr, "mid", mid);
+
+    return mid;
+}
+
+export { data_file, get_min_max, get_mid };

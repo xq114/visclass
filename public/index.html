@@ -8,8 +8,19 @@
 </head>
 <body>
     <div id='container'>
-		<svg></svg>
-	</div>
+        <div id="panel">
+            <h1>Variables</h1>
+            <ul>
+                <li>C = <input id="C" type="text" placeholder="length desired" value="1"></li>
+                <li>B = <input id="B" type="text" placeholder="separate distance" value="0.25"></li>
+                <li>R = <input id="R" type="text" placeholder="flutuation strength" value="0.01"></li>
+                <li>T = <input id="T" type="text" placeholder="number of iterations" value="500"></li>
+            </ul>
+            <div id="run" onclick="onrun1();">Run!</div>
+        </div>
+        <svg id="plot"></svg>
+		<svg id="graph"></svg>
+    </div>
     <script type="module" src="dist/index.js"></script>
 </body>
 </html>

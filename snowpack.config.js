@@ -4,7 +4,7 @@ module.exports = {
         src: '/dist',
     },
     plugins: [
-        "@snowpack/plugin-babel",
+        "@snowpack/plugin-optimize",
         "@snowpack/plugin-webpack",
     ]
 };

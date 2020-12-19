@@ -1,5 +1,9 @@
 {
   "name": "visclass",
+  "scripts": {
+    "build": "snowpack build",
+    "dev": "snowpack dev"
+  },
   "devDependencies": {
     "snowpack": "^2.17.1"
   },

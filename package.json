@@ -5,12 +5,11 @@
     "dev": "snowpack dev"
   },
   "devDependencies": {
+    "@snowpack/plugin-optimize": "^0.2.10",
     "snowpack": "^2.18.5"
   },
   "dependencies": {
-    "popper.js": "^1.16.1",
-    "bootstrap": "^4.5.3",
-    "d3": "^6.3.1",
-    "jquery": "^3.5.1"
+    "bootstrap": "^5.0.0-beta1",
+    "d3": "^6.3.1"
   }
 }

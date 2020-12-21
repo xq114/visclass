@@ -1,13 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello</title>
-    <link rel="stylesheet" href="_dist_/css/style.css">
-</head>
-<body>
-    Hello World!
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>世界知名高校CS专业水平可视分析</title>
+    <link type="text/css" rel="stylesheet" href="_dist_/css/index.css" />
+  </head>
+
+  <body>
+    <header>
+      <div id="title">
+        <h2>世界知名高校CS专业水平可视分析</h2>
+        <div class="member">李星桥，靳海慈</div>
+      </div>
+    </header>
+    <div id="content">
+      <div id="l1">
+        <div id="timespan"></div>
+        <div class="frame">
+          <svg id="p1"></svg>
+        </div>
+      </div>
+      <div id="l2">
+        <div class="frame">
+          <svg id="p2"></svg>
+        </div>
+        <div class="frame">
+          <svg id="p3"></svg>
+        </div>
+      </div>
+      <div id="l3" class="frame">
+        <svg id="p4"></svg>
+      </div>
+    </div>
+    <!-- <div id="left">
+        <div id="Node-container">
+            <h2 class="caption">关键词共现次数</h2>
+            <div id="toolbar">
+                <div data-trigger="spinner" id="spinner">
+                    <button type="button" data-spin="down">-</button>
+                    <input type="text" value="2008" data-ruler="quantity" data-max='2019' data-min="2004">
+                    <button type="button" data-spin="up">+</button>
+                </div>
+            </div>
+            <svg id="Node" width="530" height="550"></svg>
+        </div>
+    </div>
+
+    <div id="right">
+        <div id="Pack-container">
+            <h2 class="caption">关键词聚类结果</h2>
+            <svg id="Pack" width="400" height="400"></svg>
+        </div>
+        <div id="Series-container">
+            <h2 class="caption">关键词出现次数全年占比随时间变化图（%）</h2>
+            <svg id="Series" width="590" height="400"></svg>
+        </div>
+        <div id="Info-container">
+            <h2 class="caption">相关论文</h2>
+            <span id="num"></span>
+            <div id="Info" width="620" height="220"></div>
+        </div>
+    </div>
+    <div class="details"></div> -->
     <script type="module" src="_dist_/index.js"></script>
-</body>
+  </body>
 </html>

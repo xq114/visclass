@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { getActualDim } from "./utils";
 
 let StackedArea = {
   data: null,
@@ -8,19 +9,12 @@ let StackedArea = {
 };
 
 Object.defineProperties(StackedArea, {
-  rect: {
-    get() {
-      return [this.height, this.width];
-    },
-    set(rect) {
-      this.height = rect.height;
-      this.width = rect.width;
-    },
-  },
-  init(selector, data, rect) {
+  init(selector, data) {
     this.selector = selector;
     this.data = data;
-    this.rect = rect;
+    const rect = getActualDim(selector);
+    this.width = rect[0];
+    this.height = rect[1];
   },
   draw() {
     let svg = d3.select(selector).data(data);

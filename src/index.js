@@ -1,6 +1,15 @@
+import * as d3 from "d3";
 import { run } from "./controller";
 
-run("data/data.csv", "data/data.json");
+let faculties, flow;
+
+d3.csv("data/data.csv").then(data => {
+    faculties = data;
+    d3.json("data/data.json").then(data => {
+        flow = data;
+        run(faculties, flow);
+    });
+});
 
 // $(() => {
 //   $(".element-with-tooltip").tooltip();

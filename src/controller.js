@@ -1,10 +1,13 @@
-function getActualDim(selector) {
-  const element = document.getElementByQuerySelector(selector);
-  const height = Math.min(element.clientHeight, element.scrollHeight);
-  const width = Math.min(element.clientWidth, element.scrollWidth);
-  return [height, width];
-}
+import { TimeSpan } from './timespan';
 
-function run(faculties, linkes) {}
+function run(faculties, flow) {
+  console.log(flow);
+  let ts = new TimeSpan("#p1", faculties);
+  ts.draw_line();
+  ts.draw_circles();
+  ts.set_listener(() => {
+    console.log("Update!");
+  });
+}
 
 export { run };

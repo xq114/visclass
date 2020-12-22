@@ -7,7 +7,6 @@ let height = _height;
 let data = null;
 let data_file = './data/data.json';
 
-function graph_layout_algorithm(nodes, links) {
     const svg = d3.select('body')
         .append('svg')
         .attr('width', width)
@@ -85,9 +84,9 @@ function graph_layout_algorithm(nodes, links) {
         simulationNodes.attr('cx', d => d.x)
             .attr('cy', d => d.y)
     }
-}
 
-function draw_graph() {
+
+
     let svg = d3.select('#container')
         .select('svg')
         .attr('width', width)

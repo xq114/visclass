@@ -93,9 +93,16 @@ TimeSpan.prototype.draw_circles = function () {
     });
 };
 
+TimeSpan.prototype.update_dom = function (id) {
+  let leaf = document.getElementById(id);
+  leaf.innerText = `[${this.start}, ${this.end}]`;
+  return;
+};
+
 TimeSpan.prototype.set_listener = function (updater) {
   this.svg.selectAll("circle").call(
-    d3.drag()
+    d3
+      .drag()
       .on("drag", (e, d) => {
         const width = this.width;
         const mx = boundValue(e.x, 0.1 * width, 0.9 * width);
@@ -113,6 +120,7 @@ TimeSpan.prototype.set_listener = function (updater) {
           else d3.select("line").attr("x2", mx);
         }
         this.draw_circles();
+        this.update_dom("range");
       })
       .on("end", (e, d) => {
         updater();

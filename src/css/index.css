@@ -78,7 +78,7 @@ svg {
 }
 
 #content > #l2 {
-  flex: 1 1 45%;
+  flex: 1 1 40%;
   display: flex;
   flex-direction: column;
 }
@@ -88,7 +88,7 @@ svg {
 }
 
 #content > #l3 {
-  flex: 1 1 25%;
+  flex: 1 1 30%;
 }
 
 /* 

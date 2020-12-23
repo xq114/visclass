@@ -129,4 +129,4 @@ let data_file = './data/data.json';
         data = DATA;
         draw_graph();
     }
-export as{force-directed}
+   export{force-directed}

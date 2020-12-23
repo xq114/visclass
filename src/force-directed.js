@@ -18,16 +18,10 @@ ScatterPlot.prototype.init = function (data) {
   const [width, height] = [this.width, this.height];
   const margin = { top: 10, right: 10, bottom: 20, left: 40 };
   const svg = this.svg;
-    let svg = d3.select('#p1')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .attr('class', 'chart')
-   
     let links = data.links;
     let nodes = data.nodes;
 
-    let link = svg.append("g")
+    let link = d3.append("g")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
         .selectAll("line")

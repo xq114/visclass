@@ -3,7 +3,7 @@ import { getActualDim } from "./utils";
 
 let data = null;
 let data_file = './data/data.json';
-function force-directed(selector) {
+function forcedirected(selector) {
   this.selector = selector;
   [this.width, this.height] = getActualDim(selector);
   this.svg = d3
@@ -13,7 +13,7 @@ function force-directed(selector) {
 
 
 
-force-directed.prototype.init = function (data) {
+forcedirected.prototype.init = function (data) {
   const [width, height] = [this.width, this.height];
   const margin = { top: 10, right: 10, bottom: 20, left: 40 };
   const svg = this.svg;
@@ -128,6 +128,6 @@ force-directed.prototype.init = function (data) {
     }
 
  }
-force-directed.prototype.update = function (data) {};
+forcedirected.prototype.update = function (data) {};
              
    export{force-directed}

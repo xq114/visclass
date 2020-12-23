@@ -12,9 +12,12 @@ function force-directed(selector) {
     .attr("viewBox", [0, 0, this.width, this.height]);
 }
 
-ScatterPlot.prototype.init = function (data) 
 
- function draw_graph(){
+
+ScatterPlot.prototype.init = function (data) {
+  const [width, height] = [this.width, this.height];
+  const margin = { top: 10, right: 10, bottom: 20, left: 40 };
+  const svg = this.svg;
     let svg = d3.select('#p1')
         .append('svg')
         .attr('width', width)

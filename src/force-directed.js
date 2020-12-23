@@ -1,6 +1,5 @@
 import * as d3 from 'd3'
-
-
+import { getActualDim } from "./utils";
 
 let data = null;
 let data_file = './data/data.json';

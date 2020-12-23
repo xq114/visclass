@@ -126,6 +126,8 @@ forceDirected.prototype.init = function (data) {
     }
 
  }
-forceDirected.prototype.update = function (data) {};
+forceDirected.prototype.update = function (data) {
+this.svg.selectAll("g").remove();
+  this.init(data);};
              
-   export{forceDirected}
+   export{forceDirected};

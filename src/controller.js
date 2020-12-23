@@ -14,13 +14,18 @@ function run(faculties, flow) {
   sa.init(faculties);
   sp.init(faculties);
   fd.init(flow);
-  fd.set_listener(
-    (d) =>
-      (document.getElementById("l3").innerHTML = `
-    <h5>School Name</h5><p>${d.id}</p>
-    `)
-  );
 
+  fd.set_listener((d) => {
+    document.getElementById("l3").innerHTML = `
+    <h5>School Name</h5><p>${d.id}</p>
+    `;
+    sa.highlight(d);
+    sp.highlight(d);
+  });
+  fd.set_listener2(d => {
+    sa.releave();
+    sp.releave();
+  })
   ts.set_listener(() => {
     let new_data = faculties.filter((d) => {
       let year = d["Ph.D. Graduation Year"];

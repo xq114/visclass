@@ -1,10 +1,13 @@
 import * as d3 from "d3";
+import { map } from "d3";
 import { getActualDim } from "./utils";
 
 const ATTRX = "Institution Index";
 const ATTRG = "Ph.D. Graduation Year";
 const ATTRY = "H-index";
 const CURRENTY = 2020;
+
+let idToIdx = new Map();
 
 function StackedArea(selector) {
   this.selector = selector;
@@ -42,7 +45,8 @@ function groupData(data, ymin = 1950, ymax = 2020) {
     let tick = yticks[d.group];
     series[idx][tick] += 1.0 * d[ATTRY];
   }
-  return d3.stack()
+  return d3
+    .stack()
     .keys(yticks)(series)
     .map((d) => (d.forEach((v) => (v.key = d.key)), d));
 }
@@ -51,6 +55,9 @@ StackedArea.prototype.init = function (data, ymin = 1950, ymax = 2020) {
   const [width, height] = [this.width, this.height];
   const margin = { top: 10, right: 10, bottom: 20, left: 40 };
   const svg = this.svg;
+  for (const d of data) {
+    idToIdx.set(d["Institution"], d[ATTRX]);
+  }
   let series = groupData(data);
   let x = d3
     .scaleBand()
@@ -67,32 +74,45 @@ StackedArea.prototype.init = function (data, ymin = 1950, ymax = 2020) {
     .range(d3.schemeAccent)
     .unknown("#ccc");
   let xAxis = (g) =>
-    g.attr("transform", `translate(0,${height - margin.bottom})`)
+    g
+      .attr("transform", `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x).tickSizeOuter(0))
       .call((g) => g.selectAll(".domain").remove());
   let yAxis = (g) =>
-    g.attr("transform", `translate(${margin.left},0)`)
+    g
+      .attr("transform", `translate(${margin.left},0)`)
       .call(d3.axisLeft(y).ticks(null, "s"))
       .call((g) => g.selectAll(".domain").remove());
   svg.append("g").call(xAxis);
   svg.append("g").call(yAxis);
-  svg.append("g")
+  svg
+    .append("g")
     .selectAll("g")
     .data(series)
     .join("g")
-      .attr("fill", d => color(d.key))
+    .attr("fill", (d) => color(d.key))
     .selectAll("rect")
-    .data(d => d)
+    .data((d) => d)
     .join("rect")
-      .attr("x", (d, i) => x(d.data.x))
-      .attr("y", d => y(d[1]))
-      .attr("height", d => y(d[0]) - y(d[1]))
-      .attr("width", x.bandwidth());
+    .attr("x", (d, i) => x(d.data.x))
+    .attr("y", (d) => y(d[1]))
+    .attr("height", (d) => y(d[0]) - y(d[1]))
+    .attr("width", x.bandwidth());
 };
 
-StackedArea.prototype.update = function(data, ymin, ymax) {
+StackedArea.prototype.update = function (data, ymin, ymax) {
   this.svg.selectAll("g").remove();
   this.init(data, ymin, ymax);
-}
+};
+
+StackedArea.prototype.highlight = function (d) {
+  this.svg
+    .selectAll("rect")
+    .attr("opacity", (f) => (f.data.x == idToIdx.get(d.id) ? 1.0 : 0.5));
+};
+
+StackedArea.prototype.releave = function () {
+  this.svg.selectAll("rect").attr("opacity", 1.0);
+};
 
 export { StackedArea };

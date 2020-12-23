@@ -15,8 +15,17 @@ ForceDirected.prototype.set_listener = function (func) {
     this.showInfo(d);
     this.svg
       .selectAll("circle")
-      .attr("fill", (f) => (d.id == f.id ? "var(--bs-yellow)" : "var(--bs-blue)"));
-  })
+      .attr("fill", (f) =>
+        d.id == f.id ? "var(--bs-yellow)" : "var(--bs-blue)"
+      );
+  });
+};
+
+ForceDirected.prototype.set_listener2 = function (func) {
+  this.svg.selectAll("circle").on("mouseout", (e, d) => {
+    func(d);
+    this.svg.selectAll("circle").attr("fill", "var(--bs-blue)");
+  });
 };
 
 ForceDirected.prototype.init = function (data) {
@@ -38,7 +47,7 @@ ForceDirected.prototype.init = function (data) {
       "link",
       d3.forceLink().id((d) => d.id)
     )
-    .force("x", d3.forceX(width * 0.4))
+    .force("x", d3.forceX(width * 0.5))
     .force("y", d3.forceY(height * 0.4));
 
   let link = svg
@@ -78,12 +87,16 @@ ForceDirected.prototype.init = function (data) {
     .join("circle")
     .attr("stroke", "#fff")
     .attr("stroke-width", 0.2)
-    .attr("r", (d) => Math.min(Math.sqrt(d.weight) * 2 + 0.5, 4 + Math.log(d.weight)))
+    .attr("r", (d) =>
+      Math.min(Math.sqrt(d.weight) * 2 + 0.5, 4 + Math.log(d.weight))
+    )
     .attr("fill", "var(--bs-blue)")
     .on("mouseover", function (e, d) {
       svg
         .selectAll("circle")
-        .attr("fill", (f) => (d.id == f.id ? "var(--bs-yellow)" : "var(--bs-blue)"));
+        .attr("fill", (f) =>
+          d.id == f.id ? "var(--bs-yellow)" : "var(--bs-blue)"
+        );
     })
     .on("mouseout", function (e, d) {
       svg.selectAll("circle").attr("fill", "var(--bs-blue)");

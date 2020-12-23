@@ -76,4 +76,15 @@ ScatterPlot.prototype.update = function (data) {
   this.init(data);
 };
 
+ScatterPlot.prototype.highlight = function (d) {
+  this.svg
+    .selectAll("circle")
+    .attr("opacity", (f) => (f["Institution"] == d.id ? 1.0 : 0.4));
+    // .attr("opacity", (f) => console.log(d.id, " ", f["In"]));
+};
+
+ScatterPlot.prototype.releave = function () {
+  this.svg.selectAll("circle").attr("opacity", 0.4);
+};
+
 export { ScatterPlot };

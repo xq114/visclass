@@ -1,6 +1,5 @@
 import * as d3 from 'd3'
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="https://d3js.org/d3-force.v1.min.js"></script>
+
 let _width = 1000;
 let _height = 1000;
 let width = _width;

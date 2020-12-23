@@ -3,6 +3,7 @@ import { getActualDim, countDistinct } from "./utils";
 
 const ATTRX = "Institution Index";
 const ATTRY = "H-index";
+const ATTRD = "Research Interest";
 
 function ScatterPlot(selector) {
   this.selector = selector;
@@ -10,6 +11,10 @@ function ScatterPlot(selector) {
   this.svg = d3
     .select(selector)
     .attr("viewBox", [0, 0, this.width, this.height]);
+}
+
+ScatterPlot.prototype.set_listener = function (func) {
+  this.showInfo = func;
 }
 
 ScatterPlot.prototype.init = function (data) {
@@ -43,11 +48,32 @@ ScatterPlot.prototype.init = function (data) {
     .data(data)
     .join("circle")
     .attr("fill", "var(--bs-blue)")
+    .attr("opacity", "0.4")
     .attr("cx", (d) => x(d[ATTRX]) + Math.random() * rw)
     .attr("cy", (d) => y(d[ATTRY]))
-    .attr("r", (d) => 1.5);
+    .attr("r", (d) => 2.0)
+    .on("mouseover", (e, d) => {
+      this.showInfo(d);
+      svg
+        .selectAll("circle")
+        .attr("fill", (f) => {
+          return f[ATTRD] == d[ATTRD] ? "var(--bs-yellow)" : "var(--bs-blue)";
+        })
+        .attr("opacity", (f) => {
+          return f[ATTRD] == d[ATTRD] ? "1.0" : "0.4";
+        });
+    })
+    .on("mouseout", (e, d) => {
+      svg
+        .selectAll("circle")
+        .attr("fill", "var(--bs-blue)")
+        .attr("opacity", "0.4");
+    })
 };
 
-ScatterPlot.prototype.update = function (data) {};
+ScatterPlot.prototype.update = function (data) {
+  this.svg.selectAll("g").remove();
+  this.init(data);
+};
 
 export { ScatterPlot };

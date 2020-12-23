@@ -1,12 +1,18 @@
 import * as d3 from 'd3'
 
-let _width = 1000;
-let _height = 1000;
-let width = _width;
-let height = _height;
+
 
 let data = null;
 let data_file = './data/data.json';
+function force-directed(selector) {
+  this.selector = selector;
+  [this.width, this.height] = getActualDim(selector);
+  this.svg = d3
+    .select(selector)
+    .attr("viewBox", [0, 0, this.width, this.height]);
+}
+
+ScatterPlot.prototype.init = function (data) 
 
  function draw_graph(){
     let svg = d3.select('#p1')

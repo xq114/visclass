@@ -21,7 +21,7 @@ ScatterPlot.prototype.init = function (data) {
     let links = data.links;
     let nodes = data.nodes;
 
-    let link = d3.append("g")
+    let link = svg.append("g")
         .attr("stroke", "#999")
         .attr("stroke-opacity", 0.6)
         .selectAll("line")
@@ -59,6 +59,11 @@ ScatterPlot.prototype.init = function (data) {
                     }
                 })
         });
+        .call(d3.drag()
+                .on('start', started)
+                .on('drag', dragged)
+                .on('end', ended)
+            )
 
     let text = svg.append("g")
         .selectAll("text")
@@ -124,12 +129,5 @@ ScatterPlot.prototype.init = function (data) {
     }
 
  }
-   
-function main(){
-    d3.json(data_file).then(function (DATA) {
-        data = DATA;
-        draw_graph();
-    })
-}
-                
+             
    export{force-directed}

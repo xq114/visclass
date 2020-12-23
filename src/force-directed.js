@@ -9,7 +9,7 @@ let data = null;
 let data_file = './data/data.json';
 
  function draw_graph(){
-    const svg = d3.select('#container')
+    let svg = d3.select('#container')
         .append('svg')
         .attr('width', width)
         .attr('height', height)

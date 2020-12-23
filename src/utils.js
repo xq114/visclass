@@ -20,4 +20,15 @@ function boundValue(value, min, max) {
   return value < min ? min : value > max ? max : value;
 }
 
-export { getActualDim, getMinMax, boundValue };
+function countDistinct(data, attr) {
+  let set = new Set();
+  let ret = [];
+  for (const d of data) {
+    if (set.has(d[attr])) continue;
+    ret.push(d[attr]);
+    set.add(d[attr]);
+  }
+  return ret;
+}
+
+export { getActualDim, getMinMax, boundValue, countDistinct };

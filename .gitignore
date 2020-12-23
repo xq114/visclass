@@ -13,3 +13,5 @@ yarn.lock
 /node_modules
 
 *.zip
+
+.vscode

@@ -52,7 +52,6 @@ StackedArea.prototype.init = function (data) {
   const margin = { top: 10, right: 10, bottom: 20, left: 40 };
   const svg = this.svg;
   let series = groupData(data);
-  console.log(series);
   let x = d3
     .scaleBand()
     .domain(data.map((d) => d[ATTRX]).sort((a, b) => 1.0 * a - 1.0 * b))
@@ -90,5 +89,7 @@ StackedArea.prototype.init = function (data) {
       .attr("height", d => y(d[0]) - y(d[1]))
       .attr("width", x.bandwidth());
 };
+
+StackedArea.prototype.update = function(data) {}
 
 export { StackedArea };

@@ -1,5 +1,6 @@
 import { TimeSpan } from "./timespan";
-import { StackedArea } from "./stacked-area"
+import { StackedArea } from "./stacked-area";
+import { ScatterPlot } from "./scatter-plot";
 
 function run(faculties, flow) {
   let ts = new TimeSpan("#p1", faculties);
@@ -10,6 +11,8 @@ function run(faculties, flow) {
   });
   let sa = new StackedArea("#p4");
   sa.init(faculties);
+  let sp = new ScatterPlot("#p3");
+  sp.init(faculties);
 }
 
 export { run };

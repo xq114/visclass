@@ -1,19 +1,28 @@
 import { TimeSpan } from "./timespan";
 import { StackedArea } from "./stacked-area";
 import { ScatterPlot } from "./scatter-plot";
+import { forceDirected } from "./force-directed";
 
 function run(faculties, flow) {
   let ts = new TimeSpan("#p1", faculties);
+  let sa = new StackedArea("#p4");
+  let sp = new ScatterPlot("#p3");
+  let fd = new forceDirected("#p2");
+
   ts.draw_line();
   ts.draw_circles();
-  ts.set_listener(() => {
-    console.log("Update!");
-  });
-  let fd = new forceDirected("#p2");
   fd.init(flow);
-  let sa = new StackedArea("#p4");
   sa.init(faculties);
-  let sp = new ScatterPlot("#p3");
+  sp.init(faculties);
+
+  ts.set_listener(() => {
+    let new_data = faculties.filter((d) => {
+      let year = d["Ph.D. Graduation Year"];
+      return year >= ts.start && year <= ts.end;
+    });
+    sa.update(new_data, ts.start, ts.end);
+    sp.update(new_data);
+  });
   sp.set_listener(d => document.getElementById("l3").innerHTML = `
     <h5>Name</h5><p>${d["First Name"]} ${d["Last Name"]}</p>
     <h5>Institution</h5><p>${d["Institution"]}</p>
@@ -23,7 +32,6 @@ function run(faculties, flow) {
     <h5>Citations</h5><p>${d["Citations"]}</p>
     <h5>Ph.D. Graduate School</h5><p>${d["Ph.D. Graduate School"]}</p>
   `);
-  sp.init(faculties);
 }
 
 export { run };

@@ -47,7 +47,7 @@ function groupData(data, ymin = 1950, ymax = 2020) {
     .map((d) => (d.forEach((v) => (v.key = d.key)), d));
 }
 
-StackedArea.prototype.init = function (data) {
+StackedArea.prototype.init = function (data, ymin = 1950, ymax = 2020) {
   const [width, height] = [this.width, this.height];
   const margin = { top: 10, right: 10, bottom: 20, left: 40 };
   const svg = this.svg;
@@ -90,6 +90,9 @@ StackedArea.prototype.init = function (data) {
       .attr("width", x.bandwidth());
 };
 
-StackedArea.prototype.update = function(data) {}
+StackedArea.prototype.update = function(data, ymin, ymax) {
+  this.svg.selectAll("g").remove();
+  this.init(data, ymin, ymax);
+}
 
 export { StackedArea };

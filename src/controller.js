@@ -9,6 +9,8 @@ function run(faculties, flow) {
   ts.set_listener(() => {
     console.log("Update!");
   });
+  let fd = new forceDirected("#p2");
+  fd.init(flow);
   let sa = new StackedArea("#p4");
   sa.init(faculties);
   let sp = new ScatterPlot("#p3");

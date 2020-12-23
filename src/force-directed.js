@@ -128,4 +128,4 @@ forceDirected.prototype.init = function (data) {
  }
 forceDirected.prototype.update = function (data) {};
              
-   export{force-directed}
+   export{forceDirected}

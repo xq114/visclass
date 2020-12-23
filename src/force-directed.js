@@ -14,7 +14,7 @@ function force-directed(selector) {
 
 
 
-ScatterPlot.prototype.init = function (data) {
+force-directed.prototype.init = function (data) {
   const [width, height] = [this.width, this.height];
   const margin = { top: 10, right: 10, bottom: 20, left: 40 };
   const svg = this.svg;
@@ -129,5 +129,6 @@ ScatterPlot.prototype.init = function (data) {
     }
 
  }
+force-directed.prototype.update = function (data) {};
              
    export{force-directed}

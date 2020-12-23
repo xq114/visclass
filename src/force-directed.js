@@ -9,7 +9,7 @@ let data = null;
 let data_file = './data/data.json';
 
  function draw_graph(){
-    let svg = d3.select('#container')
+    let svg = d3.select('#force-directed')
         .append('svg')
         .attr('width', width)
         .attr('height', height)
@@ -120,12 +120,13 @@ let data_file = './data/data.json';
             .attr('cy', d => d.y)
     }
 
-
  }
    
-
+function main(){
     d3.json(data_file).then(function (DATA) {
         data = DATA;
         draw_graph();
-    }
+    })
+}
+                
    export{force-directed}

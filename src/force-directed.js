@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import { getActualDim } from "./utils";
 
-function forcedirected(selector) {
+function forceDirected(selector) {
   this.selector = selector;
   [this.width, this.height] = getActualDim(selector);
   this.svg = d3
@@ -11,7 +11,7 @@ function forcedirected(selector) {
 
 
 
-forcedirected.prototype.init = function (data) {
+forceDirected.prototype.init = function (data) {
   const [width, height] = [this.width, this.height];
   const margin = { top: 10, right: 10, bottom: 20, left: 40 };
   const svg = this.svg;
@@ -126,6 +126,6 @@ forcedirected.prototype.init = function (data) {
     }
 
  }
-forcedirected.prototype.update = function (data) {};
+forceDirected.prototype.update = function (data) {};
              
    export{force-directed}
